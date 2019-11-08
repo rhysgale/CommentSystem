@@ -26,7 +26,14 @@ namespace CommentSystem.ApiController
         [HttpPost]
         public void PostComment([FromBody]PostCommentModel model)
         {
-            _commentService.PostComment(model, "");
+            var userId = User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value;
+            _commentService.PostComment(model, userId);
+        }
+
+        [HttpPut]
+        public void UpdateComment([FromBody]UpdateCommentModel model)
+        {
+
         }
     }
 }

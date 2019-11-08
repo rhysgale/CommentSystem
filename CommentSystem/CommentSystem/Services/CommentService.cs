@@ -1,19 +1,36 @@
 ﻿using CommentSystem.ApiController;
+using CommentSystem.Data;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CommentSystem.Services
 {
     public class CommentService : ICommentService
     {
-        public CommentService()
-        {
+        private readonly ApplicationDbContext _dbContext;
 
+        public CommentService(ApplicationDbContext dbContext)
+        {
+            _dbContext = dbContext;
         }
 
-        public void PostComment(PostCommentModel model, string posterId)
+        public Comment PostComment(PostCommentModel model, string posterId)
+        {
+            var comment = new Comment()
+            {
+                CommenterId = posterId,
+                CommentText = model.CommentText,
+                FilmId = model.FilmId,
+                CreateDateTime = DateTime.Now,
+                ModifiedDateTime = DateTime.Now
+            };
+
+            _dbContext.Add(comment);
+            _dbContext.SaveChanges();
+
+            return comment;
+        }
+
+        public void UpdateComment(UpdateCommentModel model, string posterId)
         {
 
         }

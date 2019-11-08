@@ -11,8 +11,11 @@
             $.ajax({
                 type: "POST",
                 data: JSON.stringify({commentText: this.commentText, filmId: this.filmModel.filmId}),
-                url: "/api/PostComment",
-                contentType: "application/json"
+                url: "/api/comment",
+                contentType: "application/json",
+                success: function (comment) {
+                    this.comments.push({});
+                }
             });
         }
     },
