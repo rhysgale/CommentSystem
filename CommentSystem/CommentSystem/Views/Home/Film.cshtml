@@ -1,0 +1,39 @@
+﻿@model CommentSystem.Models.ViewModel.FilmViewModel
+@{
+    ViewData["Title"] = "Film";
+}
+
+<div id="main">
+    <h1>Film - @Model.Film.FilmTitle</h1>
+    <small>@Model.Film.FilmDescription</small>
+
+    <h2>Comments</h2>
+    <div class="list-group mt-5">
+        <div class="mb-2">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <textarea style="width: 100%" v-model="commentText" placeholder="New comment..."></textarea>
+                <button class="btn btn-success float-right" v-on:click="submitComment">Submit Comment</button>
+            }
+            else
+            {
+                <label>Please login or register to leave a comment.</label>
+            }
+        </div>
+        <div v-for="comment in comments" class="list-group-item">
+            <div class="row">
+                <label>{{comment.commentText}}</label>
+            </div>
+            <div class="row">
+                <small>By {{comment.commenterEmail}}</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    var model = @Html.Raw(Json.Serialize(Model.Film));
+</script>
+<script src="~/vue/vue.js"></script>
+<script src="~/Web/film.js"></script>

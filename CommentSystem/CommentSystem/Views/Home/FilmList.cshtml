@@ -1,0 +1,26 @@
+﻿@model CommentSystem.Models.ViewModel.FilmListViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div id="main" class="text-center">
+    <div class="list-group-flush">
+        @foreach (var film in Model.Films)
+        {
+            <div class="list-group-item" v-on:click="goToFilm(@film.FilmId)">
+                <div class="row">
+                    <div class="col-6">
+                        @film.FilmTitle
+                    </div>
+                    <div class="col-6">
+                        @film.FilmDescription
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<script src="~/vue/vue.js"></script>
+<script src="~/Web/filmList.js"></script>
