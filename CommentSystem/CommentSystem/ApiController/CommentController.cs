@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using CommentSystem.Models.Dto;
 using CommentSystem.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -24,16 +25,27 @@ namespace CommentSystem.ApiController
 
         // POST api/<controller>
         [HttpPost]
-        public void PostComment([FromBody]PostCommentModel model)
+        public CommentModel PostComment([FromBody]PostCommentModel model)
         {
-            var userId = User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value;
-            _commentService.PostComment(model, userId);
+            return _commentService.PostComment(model, GetUserId());
         }
 
         [HttpPut]
         public void UpdateComment([FromBody]UpdateCommentModel model)
         {
+            _commentService.UpdateComment(model, GetUserId());
+        }
 
+        [HttpDelete]
+        public void DeleteComment([FromBody]DeleteCommentModel model)
+        {
+            _commentService.DeleteComment(model, GetUserId());
+        }
+
+
+        private string GetUserId()
+        {
+            return User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value;
         }
     }
 }

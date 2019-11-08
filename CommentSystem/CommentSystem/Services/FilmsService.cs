@@ -23,7 +23,7 @@ namespace CommentSystem.Services
                                        FilmDescription = x.FilmDescription,
                                        FilmId = x.FilmId,
                                        FilmTitle = x.FilmTitle,
-                                       Comments = x.Comments.Select(x => new CommentModel()
+                                       Comments = x.Comments.Where(y => y.IsDeleted == false).Select(x => new CommentModel()
                                        {
                                            CommenterId = x.CommenterId,
                                            CommentId = x.CommentId,
@@ -43,7 +43,7 @@ namespace CommentSystem.Services
                 FilmDescription = film.FilmDescription,
                 FilmId = film.FilmId,
                 FilmTitle = film.FilmTitle,
-                Comments = comments.Select(x => new CommentModel()
+                Comments = comments.Where(y => y.IsDeleted == false).Select(x => new CommentModel()
                 {
                     CommenterId = x.CommenterId,
                     CommentId = x.CommentId,

@@ -27,6 +27,14 @@
             <div class="row">
                 <small>By {{comment.commenterEmail}}</small>
             </div>
+            <div class="row">
+                <div class="col-2">
+                    <a v-on:click="deleteComment(comment.commentId)">Delete</a>
+                </div>
+                <div class="col-2">
+                    <a>Edit</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
