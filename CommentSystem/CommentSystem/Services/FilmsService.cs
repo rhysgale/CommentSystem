@@ -80,7 +80,7 @@ namespace CommentSystem.Services
             {
                 FilmId = filmentity.Entity.FilmId,
                 FilmDescription = filmentity.Entity.FilmDescription,
-                FilmTitle = filmentity.Entity.FilmTitle
+                FilmTitle = filmentity.Entity.FilmTitle,
             };
         }
     }

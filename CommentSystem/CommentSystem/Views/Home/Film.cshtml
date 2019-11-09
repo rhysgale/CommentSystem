@@ -28,7 +28,7 @@
                 <small>By {{comment.commenterEmail}} </small>
             </div>
             <div class="row">
-                <small>{{comment.createDateTime}}</small>
+                <small>{{comment.createDateTime.split('+')[0]}}</small>
             </div>
             <div class="row" v-if="comment.commenterId == '@User?.Claims?.FirstOrDefault(x => x.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value'">
                 <!--Div should only show if user created the comment!-->
@@ -37,6 +37,9 @@
                     <button class="btn btn-warning btn-sm" v-on:click="openUpdateModal(comment.commentId)">Edit</button>
                     <button class="btn btn-info btn-sm" v-on:click="openHistoryModal(comment.commentId)">History</button>
                 </div>
+            </div>
+            <div v-else>
+                <button class="btn btn-info btn-sm" v-on:click="openHistoryModal(comment.commentId)">History</button>
             </div>
         </div>
     </div>

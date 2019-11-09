@@ -8,6 +8,13 @@
         history: []
     },
     methods: {
+        sortComments: function () {
+            this.comments.sort(function (a, b) {
+                a = new Date(a.createDateTime);
+                b = new Date(b.createDateTime);
+                return a > b ? -1 : a < b ? 1 : 0;
+            });
+        },
         submitComment: function () {
             var me = this;
             $.ajax({
@@ -16,7 +23,9 @@
                 url: "/api/comment",
                 contentType: "application/json",
                 success: function (comment) {
+                    me.sortComments();
                     me.comments.unshift(comment);
+                    me.commentText = "";
                 }
             });
         },
@@ -58,10 +67,13 @@
                 data: JSON.stringify(this.editComment),
                 url: "/api/comment",
                 contentType: "application/json",
-                success: function () {
+                success: function (data) {
                     var comment = me.comments.find(x => x.commentId === me.editComment.commentId);
-                    comment.commentText = me.editComment.commentText;
+                    var idx = me.comments.indexOf(comment);
+                    me.comments.splice(idx, 1);
+                    me.comments.push(data);
                     $("#editCommentModal").modal("hide");
+                    me.sortComments();
                 }
             });
         }

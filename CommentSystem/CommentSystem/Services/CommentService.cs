@@ -38,7 +38,8 @@ namespace CommentSystem.Services
                 CommentId = entry.CommentId,
                 CommentText = entry.CommentText,
                 CommenterEmail = entry.User.Email,
-                CommenterId = entry.User.Id
+                CommenterId = entry.User.Id,
+                CreateDateTime = entry.CreateDateTime
             };
         }
 

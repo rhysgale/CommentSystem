@@ -10,7 +10,6 @@ namespace CommentSystem.Models.Dto
         public string CommenterEmail { get; set; }
         public string CommentText { get; set; }
         public DateTime CreateDateTime { get; set; }
-        public DateTime ModifiedDateTime { get; set; }
         public List<CommentHistoryModel> CommentHistory { get; set; }
     }
 }
