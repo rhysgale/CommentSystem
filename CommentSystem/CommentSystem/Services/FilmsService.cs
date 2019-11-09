@@ -30,7 +30,6 @@ namespace CommentSystem.Services
                                            CommentId = x.CommentId,
                                            CommentText = x.CommentText,
                                            CreateDateTime = x.CreateDateTime,
-                                           ModifiedDateTime = x.ModifiedDateTime
                                        }).OrderByDescending(x => x.CreateDateTime).ToList()
                                    }).ToList();
         }
@@ -38,7 +37,11 @@ namespace CommentSystem.Services
         public FilmModel GetFilmById(int id)
         {
             var film = _dbContext.Films.Include(x => x.Comments).First(x => x.FilmId == id);
-            var comments = _dbContext.Comments.Include(x => x.User).Where(x => x.FilmId == id);
+
+            var comments = _dbContext.Comments.Include(x => x.User)
+                                            .Include(x => x.RevisionHistory)
+                                            .Where(x => x.FilmId == id && x.IsDeleted == false)
+                                            .ToList();
 
             return new FilmModel
             {
@@ -52,7 +55,11 @@ namespace CommentSystem.Services
                     CommentText = x.CommentText,
                     CommenterEmail = x.User.Email,
                     CreateDateTime = x.CreateDateTime,
-                    ModifiedDateTime = x.ModifiedDateTime
+                    CommentHistory = x.RevisionHistory.Select(y => new CommentHistoryModel()
+                    {
+                        CommentText = y.Text,
+                        CreateDateTime = y.CreatedDateTime
+                    }).ToList()
                 })
                 .OrderByDescending(x => x.CreateDateTime).ToList()
             };

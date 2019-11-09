@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using CommentSystem.Models.Entities;
+using Microsoft.AspNetCore.Identity;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -14,11 +17,11 @@ namespace CommentSystem.Data
         public string CommenterId { get; set; }
         public bool IsDeleted { get; set; }
         public DateTime CreateDateTime { get; set; }
-        public DateTime ModifiedDateTime { get; set; }
 
         [ForeignKey("FilmId")]
         public virtual Film LinkedFilm { get; set; }
         [ForeignKey("CommenterId")]
         public virtual IdentityUser User { get; set; }
+        public virtual ICollection<CommentHistory> RevisionHistory { get; set; }
     }
 }

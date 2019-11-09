@@ -4,7 +4,8 @@
         comments: [],
         commentText: "",
         filmModel: {},
-        editComment: {commentText: "", commentId: ""}
+        editComment: { commentText: "", commentId: "" },
+        history: []
     },
     methods: {
         submitComment: function () {
@@ -32,6 +33,16 @@
                     me.comments.splice(idx, 1);
                 }
             });
+        },
+        openHistoryModal: function (id) {
+            var me = this;
+            var selectedComment = me.comments.find(x => x.commentId === id);
+            me.history = [];
+
+            selectedComment.commentHistory.forEach(function (model) {
+                me.history.push(model);
+            });
+            $("#historyModal").modal("show");
         },
         openUpdateModal: function (commentId) {
             var me = this;

@@ -31,9 +31,9 @@ namespace CommentSystem.ApiController
         }
 
         [HttpPut]
-        public void UpdateComment([FromBody]UpdateCommentModel model)
+        public CommentModel UpdateComment([FromBody]UpdateCommentModel model)
         {
-            _commentService.UpdateComment(model, GetUserId());
+            return _commentService.UpdateComment(model, GetUserId());
         }
 
         [HttpDelete]
@@ -41,7 +41,6 @@ namespace CommentSystem.ApiController
         {
             _commentService.DeleteComment(model, GetUserId());
         }
-
 
         private string GetUserId()
         {
