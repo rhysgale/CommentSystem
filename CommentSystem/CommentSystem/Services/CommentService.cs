@@ -46,7 +46,7 @@ namespace CommentSystem.Services
         {
             var comment = _dbContext.Comments.First(x => x.CommentId == model.CommentId);
 
-            comment.CommentText = model.NewCommentText;
+            comment.CommentText = model.CommentText;
             comment.ModifiedDateTime = DateTime.Now;
 
             _dbContext.SaveChanges();

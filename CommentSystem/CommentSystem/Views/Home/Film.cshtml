@@ -7,8 +7,8 @@
     <h1>Film - @Model.Film.FilmTitle</h1>
     <small>@Model.Film.FilmDescription</small>
 
-    <h2>Comments</h2>
-    <div class="list-group mt-5">
+    <h5 class="mt-5">Comments</h5>
+    <div class="list-group">
         <div class="mb-2">
             @if (User.Identity.IsAuthenticated)
             {
@@ -25,14 +25,36 @@
                 <label>{{comment.commentText}}</label>
             </div>
             <div class="row">
-                <small>By {{comment.commenterEmail}}</small>
+                <small>By {{comment.commenterEmail}} </small>
             </div>
             <div class="row">
-                <div class="col-2">
-                    <a v-on:click="deleteComment(comment.commentId)">Delete</a>
+                <small>{{comment.createDateTime}}</small>
+            </div>
+            <div class="row" v-if="comment.commenterId == '@User?.Claims?.FirstOrDefault(x => x.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value'">
+                <!--Div should only show if user created the comment!-->
+                <div class="btn-group mt-2">
+                    <button class="btn btn-danger btn-sm" v-on:click="deleteComment(comment.commentId)">Delete</button>
+                    <button class="btn btn-warning btn-sm" v-on:click="openUpdateModal(comment.commentId)">Edit</button>
                 </div>
-                <div class="col-2">
-                    <a>Edit</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="editCommentModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Comment</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <textarea v-model="editComment.commentText"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" v-on:click="updateComment">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>

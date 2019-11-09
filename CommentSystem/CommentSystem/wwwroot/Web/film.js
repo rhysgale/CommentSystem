@@ -3,7 +3,8 @@
     data: {
         comments: [],
         commentText: "",
-        filmModel: {}
+        filmModel: {},
+        editComment: {commentText: "", commentId: ""}
     },
     methods: {
         submitComment: function () {
@@ -32,14 +33,24 @@
                 }
             });
         },
+        openUpdateModal: function (commentId) {
+            var me = this;
+            me.editComment.commentId = commentId;
+            var selected = me.comments.find(x => x.commentId === commentId);
+            me.editComment.commentText = selected.commentText;
+            $("#editCommentModal").modal("show");
+        },
         updateComment: function () {
+            var me = this;
             $.ajax({
                 type: "PUT",
-                data: JSON.stringify({ commentText: this.commentText, filmId: this.filmModel.filmId }),
+                data: JSON.stringify(this.editComment),
                 url: "/api/comment",
                 contentType: "application/json",
-                success: function (comment) {
-                    me.comments.push(comment);
+                success: function () {
+                    var comment = me.comments.find(x => x.commentId === me.editComment.commentId);
+                    comment.commentText = me.editComment.commentText;
+                    $("#editCommentModal").modal("hide");
                 }
             });
         }

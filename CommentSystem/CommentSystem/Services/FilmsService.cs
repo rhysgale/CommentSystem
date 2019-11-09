@@ -27,9 +27,10 @@ namespace CommentSystem.Services
                                        {
                                            CommenterId = x.CommenterId,
                                            CommentId = x.CommentId,
-                                           CommentText = x.CommentText
-                                       })
-                                       .ToList()
+                                           CommentText = x.CommentText,
+                                           CreateDateTime = x.CreateDateTime,
+                                           ModifiedDateTime = x.ModifiedDateTime
+                                       }).OrderByDescending(x => x.CreateDateTime).ToList()
                                    }).ToList();
         }
 
@@ -48,8 +49,11 @@ namespace CommentSystem.Services
                     CommenterId = x.CommenterId,
                     CommentId = x.CommentId,
                     CommentText = x.CommentText,
-                    CommenterEmail = x.User.Email
-                }).ToList()
+                    CommenterEmail = x.User.Email,
+                    CreateDateTime = x.CreateDateTime,
+                    ModifiedDateTime = x.ModifiedDateTime
+                })
+                .OrderByDescending(x => x.CreateDateTime).ToList()
             };
         }
     }
