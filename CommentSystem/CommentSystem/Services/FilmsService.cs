@@ -1,4 +1,5 @@
-﻿using CommentSystem.Data;
+﻿using CommentSystem.ApiController;
+using CommentSystem.Data;
 using CommentSystem.Models.Dto;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -54,6 +55,25 @@ namespace CommentSystem.Services
                     ModifiedDateTime = x.ModifiedDateTime
                 })
                 .OrderByDescending(x => x.CreateDateTime).ToList()
+            };
+        }
+
+        public FilmModel AddFilm(NewFilmModel model)
+        {
+            var film = new Film()
+            {
+                FilmDescription = model.FilmDescription,
+                FilmTitle = model.FilmTitle
+            };
+
+            var filmentity = _dbContext.Films.Add(film);
+            _dbContext.SaveChanges();
+
+            return new FilmModel()
+            {
+                FilmId = filmentity.Entity.FilmId,
+                FilmDescription = filmentity.Entity.FilmDescription,
+                FilmTitle = filmentity.Entity.FilmTitle
             };
         }
     }

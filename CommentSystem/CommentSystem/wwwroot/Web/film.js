@@ -15,7 +15,7 @@
                 url: "/api/comment",
                 contentType: "application/json",
                 success: function (comment) {
-                    me.comments.push(comment);
+                    me.comments.unshift(comment);
                 }
             });
         },

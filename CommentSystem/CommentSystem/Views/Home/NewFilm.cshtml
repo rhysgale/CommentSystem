@@ -1,0 +1,21 @@
+﻿@model CommentSystem.Models.ViewModel.FilmViewModel
+@{
+    ViewData["Title"] = "Film";
+}
+
+<div id="main">
+    <form>
+        <div class="form-group">
+            <label class="form-text">Film Name</label>
+            <input id="filmtitle" style="width: 100%" />
+        </div>
+        <div class="form-group">
+            <label class="form-text">Film Description</label>
+            <input id="filmdesc" style="width: 100%" />
+        </div>
+        <button type="button" class="btn btn-success float-right" v-on:click="submitFilm">Save Film</button>
+    </form>
+</div>
+
+<script src="~/vue/vue.js"></script>
+<script src="~/Web/newFilm.js"></script>

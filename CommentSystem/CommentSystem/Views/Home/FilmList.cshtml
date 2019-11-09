@@ -19,8 +19,13 @@
                 </div>
             </div>
         }
+
+        @if (Model.Films.Count() <= 0)
+        {
+            <label class="bg-danger">No films!</label>
+            <label>Please add a film using the "Add Film" button</label>
+        }
     </div>
 </div>
-
 <script src="~/vue/vue.js"></script>
 <script src="~/Web/filmList.js"></script>

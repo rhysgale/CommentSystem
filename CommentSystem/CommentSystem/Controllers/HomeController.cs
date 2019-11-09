@@ -39,5 +39,10 @@ namespace CommentSystem.Controllers
 
             return View("Film", viewModel);
         }
+
+        public IActionResult NewFilm()
+        {
+            return View();
+        }
     }
 }
